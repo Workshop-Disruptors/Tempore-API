@@ -8,8 +8,15 @@ var hostname = "localhost";
 var port = 3000;
 
 // Ces options sont recommandées par mLab pour une connexion à la base
-var options = { server: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } }, 
-replset: { socketOptions: { keepAlive: 300000, connectTimeoutMS : 30000 } } };
+var options = {
+  useMongoClient: true,
+  autoIndex: false, // Don't build indexes
+  reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
+  reconnectInterval: 500, // Reconnect every 500ms
+  poolSize: 10, // Maintain up to 10 socket connections
+  // If not connected, return errors immediately rather than waiting for reconnect
+  bufferMaxEntries: 0
+};
 
 // Adresse de la base de données
 var urlmongo = "mongodb://test-user:test-password@ds133044.mlab.com:33044/disruptors"; 
@@ -42,8 +49,8 @@ var Medecin = mongoose.model("Medecin",medecinSchema);
 // Creation d'un Router pour faciliter le routage
 var router = express.Router();
 
-// Implementation pour la route /medecin
-router.route("/medecin")
+// Implementation pour la route /medecins
+router.route("/medecins")
 .get(function(req,res){
 	Medecin.find(function(err, medecins){
         if (err){
@@ -60,7 +67,7 @@ router.route("/medecin")
 	medecin.nom = req.body.nom;
 	medecin.ville = req.body.ville;
 	medecin.tel = req.body.tel;
-	medecin.description =req.body.description;
+	medecin.description = req.body.description;
 
 	// Enregistrement du medecin dans la base de données
 	medecin.save(function(err){
@@ -68,19 +75,25 @@ router.route("/medecin")
 			res.send(err);
 		}
 		else {
-			res.send("Vous venez d'ajouter un médecin à Tempore")};	})
+			res.send("Vous venez d'ajouter un médecin à Tempore")
+		};	
+	})
 });
 
 //Implementation pour un medecin specifique dans /medecin
-router.route("/medecin/:idMedecin")
+router.route("/medecins/:medecin_id")
 .get(function(req,res){
-	res.send("Vous acceder aux information du medecin "+req.params.idMedecin);
+	 Medecin.findById(req.params.medecin_id, function(err, medecin) {
+            if (err)
+                res.send(err);
+            res.json(medecin);
+        });
 })
 .put(function(req,res){
-	res.send("Vous souhaitez modifier les informations du medecin "+req.params.idMedecin);
+	res.send("Vous souhaitez modifier les informations du medecin "+req.params.medecin_id);
 })
 .get(function(req,res){
-	res.send("Vous souhaitez supprimer de la liste le medecin "+req.params.idMedecin);
+	res.send("Vous souhaitez supprimer de la liste le medecin "+req.params.medecin_id);
 });
 
 // Implementation à la racine
