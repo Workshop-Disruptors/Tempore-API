@@ -36,16 +36,8 @@ var app = express();
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-// Definiton de notre schéma de données
-var medecinSchema = mongoose.Schema({
-	nom: String,
-	ville: String,
-	tel: String,
-	description: String
-});
-
-var Medecin = mongoose.model("Medecin",medecinSchema);
-
+// Import du modele medecin
+var Medecin = require('./models/MedecinModel')
 
 // Creation d'un Router pour faciliter le routage
 var router = express.Router();
@@ -76,7 +68,7 @@ router.route("/medecins")
 			res.send(err);
 		}
 		else {
-			res.send("Vous venez d'ajouter un médecin à Tempore")
+			res.send("Vous venez d'ajouter une fiche médecin à Tempore")
 		};	
 	})
 });
@@ -105,7 +97,7 @@ router.route("/medecins/:medecin_id")
 			res.send(err);
 			}
 		// Si tout est ok
-		res.json({message : 'Bravo, mise à jour des données OK'});
+		res.json({message : 'Mise à jour des données médecin réalisée'});
 		});                
 	});
 })
@@ -114,7 +106,7 @@ router.route("/medecins/:medecin_id")
 		if (err){
 			res.send(err); 
 		}
-		res.json({message:"Bravo, medecin supprimé"}); 
+		res.json({message:"Données médecin supprimées"}); 
 	}); 
 	
 });
