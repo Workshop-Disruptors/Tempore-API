@@ -36,34 +36,34 @@ var app = express();
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-// Import du modele medecin
-var Medecin = require('./models/MedecinModel')
+// Import du modele doctor
+var Doctor = require('./models/DoctorModel')
 
 // Creation d'un Router pour faciliter le routage
 var router = express.Router();
 
-// Implementation pour la route /medecins
-router.route("/medecins")
+// Implementation pour la route /doctors
+router.route("/doctors")
 .get(function(req,res){
-	Medecin.find(function(err, medecins){
+	Doctor.find(function(err, doctors){
 		if (err){
 			res.send(err); 
 		}
-		res.json(medecins); 
+		res.json(doctors); 
 		
 	})
 })
 .post(function(req,res){
-	// Ajout d'un medecin suivant le model definit plus haut
-	var medecin = new Medecin();
+	// Ajout d'un doctor suivant le model definit plus haut
+	var doctor = new Doctor();
 
-	medecin.nom = req.body.nom;
-	medecin.ville = req.body.ville;
-	medecin.tel = req.body.tel;
-	medecin.description = req.body.description;
+	doctor.name = req.body.name;
+	doctor.city = req.body.city;
+	doctor.phone = req.body.phone;
+	doctor.description = req.body.description;
 
-	// Enregistrement du medecin dans la base de données
-	medecin.save(function(err,medecin){
+	// Enregistrement du doctor dans la base de données
+	doctor.save(function(err,doctor){
 		if(err){
 			res.send(err);
 		}
@@ -73,26 +73,26 @@ router.route("/medecins")
 	})
 });
 
-//Implementation pour un medecin specifique dans /medecins
-router.route("/medecins/:medecin_id")
+// Implementation pour un doctor specifique dans /doctors
+router.route("/doctors/:doctor_id")
 .get(function(req,res){
-	 Medecin.findById(req.params.medecin_id, function(err, medecin) {
+	 Doctor.findById(req.params.doctor_id, function(err, doctor) {
 			if (err)
 				res.send(err);
-			res.json(medecin);
+			res.json(doctor);
 		});
 })
 .put(function(req,res){ 
-	Medecin.findById(req.params.medecin_id, function(err, medecim) {
+	Doctor.findById(req.params.doctor_id, function(err, medecim) {
 		if (err){
 			res.send(err);
 			}
-		// Mise à jour des données du medecin
-		medecin.nom = req.body.nom;
-		medecin.adresse = req.body.adresse;
-		medecin.tel = req.body.tel;
-		medecin.description = req.body.description; 
-		medecin.save(function(err){
+		// Mise à jour des données du doctor
+		doctor.nom = req.body.nom;
+		doctor.adresse = req.body.adresse;
+		doctor.tel = req.body.tel;
+		doctor.description = req.body.description; 
+		doctor.save(function(err){
 		if(err){
 			res.send(err);
 			}
@@ -102,7 +102,7 @@ router.route("/medecins/:medecin_id")
 	});
 })
 .delete(function(req,res){ 
-	Medecin.remove({_id: req.params.medecin_id}, function(err, medecin){
+	Doctor.remove({_id: req.params.doctor_id}, function(err, doctor){
 		if (err){
 			res.send(err); 
 		}
@@ -120,7 +120,7 @@ router.route("/")
 // Initialisation du serveur avec le routage
 app.use(router);
 
-//Demarage du serveur
+// Demarage du serveur
 app.listen(port, hostname, function(){
 	console.log("Mon serveur fonctionne sur http://"+hostname+":"+port+"\n");
 });
