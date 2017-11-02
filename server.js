@@ -1,13 +1,13 @@
 // Récuperation des librairies de bases permettant de faire un serveur d'API
-var express = require ("express");
-var bodyParser = require("body-parser");
-var mongoose = require("mongoose")
+const express = require ("express");
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose")
 
 // Parametres du serveur
 var hostname = "localhost";
 var port = 3000;
 
-// Ces options sont recommandées par mLab pour une connexion à la base
+// Options pour la connexion à la base de données
 var options = {
   useMongoClient: true,
   autoIndex: false, // Don't build indexes
@@ -22,6 +22,7 @@ var options = {
 var urlmongo = "mongodb://test-user:test-password@ds133044.mlab.com:33044/disruptors"; 
 
 // Copnnexion de l'API à la base de données
+mongoose.Promise = global.Promise;
 mongoose.connect(urlmongo, options, function(err) {
 	if(err){
 console.log("Erreur lors de la connexion à la base de données")
@@ -53,11 +54,11 @@ var router = express.Router();
 router.route("/medecins")
 .get(function(req,res){
 	Medecin.find(function(err, medecins){
-        if (err){
-            res.send(err); 
-        }
-        res.json(medecins); 
-        
+		if (err){
+			res.send(err); 
+		}
+		res.json(medecins); 
+		
 	})
 })
 .post(function(req,res){
@@ -70,7 +71,7 @@ router.route("/medecins")
 	medecin.description = req.body.description;
 
 	// Enregistrement du medecin dans la base de données
-	medecin.save(function(err){
+	medecin.save(function(err,medecin){
 		if(err){
 			res.send(err);
 		}
@@ -80,20 +81,42 @@ router.route("/medecins")
 	})
 });
 
-//Implementation pour un medecin specifique dans /medecin
+//Implementation pour un medecin specifique dans /medecins
 router.route("/medecins/:medecin_id")
 .get(function(req,res){
 	 Medecin.findById(req.params.medecin_id, function(err, medecin) {
-            if (err)
-                res.send(err);
-            res.json(medecin);
-        });
+			if (err)
+				res.send(err);
+			res.json(medecin);
+		});
 })
-.put(function(req,res){
-	res.send("Vous souhaitez modifier les informations du medecin "+req.params.medecin_id);
+.put(function(req,res){ 
+	Medecin.findById(req.params.medecin_id, function(err, medecim) {
+		if (err){
+			res.send(err);
+			}
+		// Mise à jour des données du medecin
+		medecin.nom = req.body.nom;
+		medecin.adresse = req.body.adresse;
+		medecin.tel = req.body.tel;
+		medecin.description = req.body.description; 
+		medecin.save(function(err){
+		if(err){
+			res.send(err);
+			}
+		// Si tout est ok
+		res.json({message : 'Bravo, mise à jour des données OK'});
+		});                
+	});
 })
-.get(function(req,res){
-	res.send("Vous souhaitez supprimer de la liste le medecin "+req.params.medecin_id);
+.delete(function(req,res){ 
+	Medecin.remove({_id: req.params.medecin_id}, function(err, medecin){
+		if (err){
+			res.send(err); 
+		}
+		res.json({message:"Bravo, medecin supprimé"}); 
+	}); 
+	
 });
 
 // Implementation à la racine
