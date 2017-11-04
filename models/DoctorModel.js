@@ -1,4 +1,4 @@
-// MedecinModel.js
+// ./models/MedecinModel.js
 const mongoose = require("mongoose")
 
 // Definiton de notre schéma de données

@@ -37,7 +37,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 // Import du modele doctor
-var Doctor = require('./models/DoctorModel')
+var Doctor = require('./models/DoctorModel');
 
 // Creation d'un Router pour faciliter le routage
 var router = express.Router();
@@ -83,7 +83,7 @@ router.route("/doctors/:doctor_id")
 		});
 })
 .put(function(req,res){ 
-	Doctor.findById(req.params.doctor_id, function(err, medecim) {
+	Doctor.findById(req.params.doctor_id, function(err, doctor) {
 		if (err){
 			res.send(err);
 			}
