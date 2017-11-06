@@ -9,4 +9,14 @@ var medecinSchema = mongoose.Schema({
 	description: {type : String}
 });
 
+// Propriété vrituelle poour le modéle
+// Definition du schéma d'URL
+medecinSchema
+.virtual('url')
+.get(function () {
+  return '/doctor/' + this._id;
+});
+
+
+// Export du modèle
 module.exports = mongoose.model("Medecin",medecinSchema);

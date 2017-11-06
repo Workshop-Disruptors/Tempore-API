@@ -23,17 +23,18 @@ exports.doctor_list = function(req, res){
 
 // Affiche les details d'un medecin specifique
 exports.doctor_detail = function(req, res){
-	res.send("NOT IMPLEMENTED: Doctor detail: " + req.params.id)
-};
-
-// Demande de création d'un medecin depuis GET
-exports.doctor_create_get = function(req, res){
 	Doctor.findById(req.params.doctor_id, function(err, doctor){
 		if (err){
 			res.send(err);
 		};
 		res.json(doctor);
 	});
+};
+
+// Demande de création d'un medecin depuis GET
+exports.doctor_create_get = function(req, res){
+	res.send('NOT IMPLEMENTED: Doctor create GET');
+
 };
 
 // Création d'un médecin via POST
@@ -53,7 +54,8 @@ exports.doctor_create_post = function(req, res){
 			res.send(err);
 		}
 		else {
-			res.send("Vous venez d'ajouter une fiche médecin à Tempore")
+			res.send("Vous venez d'ajouter une fiche médecin à Tempore");
+			res.json(doctor);
 		};	
 	});
 };
