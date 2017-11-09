@@ -34,8 +34,8 @@ var options = {
 mongoose.Promise = global.Promise;
 mongoose.connect(urlmongo, options, function(err) {
 	if(err){
-console.log("Erreur lors de la connexion à la base de données")
-} else { console.log("Connexion à la base de données réussie")}
+    console.log("Erreur lors de la connexion à la base de données")
+  } else { console.log("Connexion à la base de données réussie")}
 });
 
 // Import du modèle medecin
@@ -54,9 +54,9 @@ app.use(function(req, res, next) {
 
 // Gestionnaire d'erreurs
 app.use(function(err, req, res) {
-/*	// set locals, only providing error in development
+	// set locals, only providing error in development
 	res.locals.message = err.message;
-	res.locals.error = err;*/
+	res.locals.error = err;
 
   res.status(err.status || 500);
 
