@@ -6,7 +6,7 @@ var router = express.Router();
 
 router.get("/", function(req,res){
 //	res.redirect("/medecin");
-	res.send("Bienvenue sur Tempore");
+res.send("Bienvenue sur Tempore");
 });
 
 module.exports = router;
