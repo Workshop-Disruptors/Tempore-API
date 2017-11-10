@@ -46,7 +46,6 @@ exports.doctor_create_post = function(req, res){
 	if(req.body.password!==req.body.passwordConf){
 		res.send("Mots de passe differents");
 	} else {
-
 		// fonction create et save
 		function create (callback){
 			var doctor = new Doctor();
@@ -69,18 +68,20 @@ exports.doctor_create_post = function(req, res){
 			});
 		};
 
+
 		function save (doctor) {
-// Enregistrement du medecin dans la base de données
-doctor.save(function(err){
-	if(err){
-		res.send(err);
-	} else {
-		res.send("Vous venez d'ajouter une fiche médecin à Tempore");
-	};	
-});
-};
+			// Enregistrement du medecin dans la base de données
+			doctor.save(function(err){
+				if(err){
+					res.send(err);
+				} else {
+				res.send("Vous venez d'ajouter une fiche médecin à Tempore");
+			};	
+		});
+	};
 
 create(save);
+
 };
 
 };
