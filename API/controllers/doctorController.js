@@ -48,6 +48,10 @@ exports.doctor_register_post = function(req, res, next){
       mail: req.body.mail,
       name: req.body.name,
       password: req.body.password,
+      city: req.body.ville,
+      tel: req.body.city,
+      description: req.body.description
+
     }
 
     Doctor.create(doctordata, function (error, user) {
@@ -55,7 +59,8 @@ exports.doctor_register_post = function(req, res, next){
         return next(error);
       } else {
         req.session.userId = user._id;
-        return res.redirect('/profile');
+    //   return res.redirect('/profile');
+    	return res.send("Done!");
       }
     });
 
