@@ -4,13 +4,9 @@
 // Récuperation du modèle medecin
 const Doctor = require ("../models/DoctorModel");
 
-// Récuperation des librairies bodyParser et bcrypt
-const bodyParser = require("body-parser");
-const bcrypt = require('bcrypt');
-
 // Home page médecin
 exports.index = function(req, res) {
-	res.send('NOT IMPLEMENTED: Site Home Page');
+	res.send('Home Page /doctor');
 };
 
 // Afficher la liste des medecins
@@ -24,7 +20,7 @@ exports.doctor_list = function(req, res){
 };
 
 // Affiche les details d'un medecin specifique
-exports.doctor_detail = function(req, res){
+exports.doctor_details = function(req, res){
 	Doctor.findById(req.params.doctor_id, function(err, doctor){
 		if (err){
 			res.send(err);
@@ -33,129 +29,104 @@ exports.doctor_detail = function(req, res){
 	});
 };
 
-// Demande de création d'un medecin depuis GET
-exports.doctor_create_get = function(req, res){
-	res.send('NOT IMPLEMENTED: Doctor create GET');
-
-};
-
 // Création d'un médecin via POST
-exports.doctor_create_post = function(req, res){
+exports.doctor_register_post = function(req, res, next){
 	// Crée un nouveau medecin selon le model
 
-	if(req.body.password!==req.body.passwordConf){
-		res.send("Mots de passe differents");
+  if (req.body.password !== req.body.passwordConf) {
+    var err = new Error('Mots de passe differents.');
+    err.status = 400;
+    res.send('Mots de passe differents.');
+    return next(err);
+  }
+
+  if (req.body.mail &&
+    req.body.name &&
+    req.body.password) {
+
+    var doctordata = {
+      mail: req.body.mail,
+      name: req.body.name,
+      password: req.body.password,
+    }
+
+    Doctor.create(doctordata, function (error, user) {
+      if (error) {
+        return next(error);
+      } else {
+        req.session.userId = user._id;
+        return res.redirect('/profile');
+      }
+    });
+
 	} else {
-		// fonction create et save
-		function create (callback){
-			var doctor = new Doctor();
-
-			doctor.mail = req.body.mail;
-			doctor.name = req.body.name;
-			doctor.city = req.body.city;
-			doctor.phone = req.body.phone;
-			doctor.description = req.body.description;
-
-			var saltRounds = 10;
-
-			bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
-				if (err){
-					console.log(err);
-				} else {
-					doctor.password = hash;
-					return callback(doctor)
-				};
-			});
-		};
-
-
-		function save (doctor) {
-			// Enregistrement du medecin dans la base de données
-			doctor.save(function(err){
-				if(err){
-					res.send(err);
-				} else {
-				res.send("Vous venez d'ajouter une fiche médecin à Tempore");
-			};	
-		});
-	};
-
-create(save);
-
+    var err = new Error('Tous les chanps sont requis.');
+    err.status = 400;
+    return next(err);
+  }
 };
 
+// Connection d'un médecin via POST
+exports.doctor_login_post = function(req, res, next){
+
+ 	if (req.body.logemail && req.body.logpassword) {
+    User.authenticate(req.body.logemail, req.body.logpassword, function (error, doctor) {
+      if (error || !doctor) {
+        var err = new Error('Email ou mot de passse incorrecte.');
+        err.status = 401;
+        return next(err);
+      } else {
+        req.session.userId = doctor._id;
+        return res.redirect('/profile');
+      }
+    });
+  } else {
+    var err = new Error('Tous les chanps sont requis.');
+    err.status = 400;
+    return next(err);
+  }
 };
 
-// Demande de suppression d'un médecin depuis GET
-exports.doctor_remove_get = function(req, res){
-	res.send("NOT IMPLEMENTED: Doctor delete GET")
+
+// GET route after registering
+exports.doctor_profile = function(req, res, next){
+  Doctor.findById(req.session.userId)
+    .exec(function (doctor, user) {
+      if (error) {
+        return next(error);
+      } else {
+        if (doctor === null) {
+          var err = new Error('Non autorisé ! Revenez en arrière !');
+          err.status = 400;
+          return next(err);
+        } else {
+          return res.send('<h1>Name: </h1>' + doctor.name + '<h2>Mail: </h2>' + doctor.mail + '<br><a type="button" href="/logout">Logout</a>')
+        }
+      }
+    });
 };
+
 
 // Supprime un medecin via DELETE
 exports.doctor_remove_delete = function(req, res){
-	Doctor.remove({_id: req.params.doctor_id}, function(err, doctor){
-		if (err){
-			res.send(err); 
-		}
-		res.json({message:"Données médecin supprimées"}); 
-	}); 
-};
-
-// Demande de mise à jour d'un medecin depuis GET
-exports.doctor_update_get = function(req, res){
-	Doctor.findById(req.params.doctor_id, function(err, doctor) {
-
-		if (doctor === {}) {
-			res.send("Pas de fiche sous cet identifiant.");
-		} else {
-			res.send("NOT IMPLEMENTED: Doctor update GET")
-		};
-	});
+		res.send("Non implementé pour")
 };
 
 // Mise à jour d'un medecin via PUT
 exports.doctor_update_put = function(req, res){
-	Doctor.findById(req.params.doctor_id, function(err, doctor) {
-
-		if(req.body.password!==req.body.passwordConf){
-			res.send("Mots de passe differents");
-		} else {
-
-// fonction create et save
-function create (callback){
-	var doctor = new Doctor();
-
-	doctor.mail = req.body.mail;
-	doctor.name = req.body.name;
-	doctor.city = req.body.city;
-	doctor.phone = req.body.phone;
-	doctor.description = req.body.description;
-
-	var saltRounds = 10;
-
-	bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
-		if (err){
-			console.log(err);
-		} else {
-			doctor.password = hash;
-			return callback(doctor)
-		};
-	});
+		res.send("Non implementé pour")
 };
 
-function save (doctor) {
-// Enregistrement du medecin dans la base de données
-doctor.save(function(err){
-	if(err){
-		res.send(err);
-	} else {
-		res.send("Vous venez de mettre a jour une fiche médecin dans Tempore");
-	};	
-});
-};
-
-create(save)
-
-};
-});
+// Deconnexion via GET
+exports.doctor_deconnexion = function (req, res, next) {
+  if (req.session) {
+    // delete session object
+    req.session.destroy(function (err) {
+      if (err) {
+        return next(err);
+      } else {
+        return res.redirect('/');
+      }
+    });
+  }
 };

@@ -4,6 +4,9 @@
 const express = require("express");
 const mongoose = require("mongoose")
 const bodyParser = require('body-parser');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
+
 
 // Récuperation des routes
 var index = require("./routes/index");
@@ -32,11 +35,24 @@ var options = {
 
 // Connexion à la base de données
 mongoose.Promise = global.Promise;
-mongoose.connect(urlmongo, options, function(err) {
-	if(err){
-    console.log("Erreur lors de la connexion à la base de données")
-  } else { console.log("Connexion à la base de données réussie")}
+mongoose.connect(urlmongo, options);
+
+var db = mongoose.connection;
+
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function () {
+  console.log("Connexion à la base de données réussie")
 });
+
+//use sessions for tracking logins
+app.use(session({
+  secret: 'doctor',
+  resave: true,
+  saveUninitialized: false,
+    store: new MongoStore({
+    mongooseConnection: db
+  })
+}));
 
 // Import du modèle medecin
 var Doctor = require("./models/DoctorModel");
@@ -53,12 +69,9 @@ app.use(function(req, res, next) {
 });
 
 // Gestionnaire d'erreurs
-app.use(function(err, req, res) {
-	// set locals, only providing error in development
-	res.locals.message = err.message;
-	res.locals.error = err;
-
+app.use(function(err, req, res, next) {
   res.status(err.status || 500);
+  res.send(err.message);
 
 });
 
