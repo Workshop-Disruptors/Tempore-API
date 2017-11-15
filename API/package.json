@@ -643,14 +643,7 @@
       "resolved": "https://registry.npmjs.org/mime-types/-/mime-types-2.1.17.tgz",
       "version": "2.1.17"
     },
-    "minimatch": {
-      "integrity": "sha512-yJHVQEhyqPLUTgt9B83PXu6W3rx4MvvHvSUvToogpwoGDOUQ+yDrR0HRot+yOCdCO7u4hX3pWft6kWBBcqh0UA==",
-      "requires": {
-        "brace-expansion": "1.1.8"
-      },
-      "resolved": "https://registry.npmjs.org/minimatch/-/minimatch-3.0.4.tgz",
-      "version": "3.0.4"
-    },
+    "minimatch": "^3.0.4",
     "minimist": {
       "integrity": "sha1-hX/Kv8M5fSYluCKCYuhqp6ARsF0=",
       "resolved": "https://registry.npmjs.org/minimist/-/minimist-0.0.8.tgz",
