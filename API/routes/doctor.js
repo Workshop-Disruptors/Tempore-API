@@ -7,6 +7,17 @@ var router = express.Router();
 // Recuperation du module controller doctor
 var doctor_controller = require("../controllers/doctorController");
 
+// Authentificaiton
+function requiresLogin(req, res, next) {
+  if (req.session && req.session.userId) {
+    return next();
+  } else {
+    var err = new Error('Vous devez etre connecté pour acceder à cette page.');
+    err.status = 401;
+    return next(err);
+  }
+}
+
 /// DOCTOR ROUTES ///
 
 /* GET | Page d'accueil */ 
@@ -19,13 +30,13 @@ router.post("/register", doctor_controller.doctor_register_post);
 router.post("/login", doctor_controller.doctor_login_post);
 
 /*  POST | Deconneixon d'un medecin */
-router.get("/logout", doctor_controller.doctor_logout);
+router.get("/logout", requiresLogin, doctor_controller.doctor_logout);
 
 /* GET | Demande le profile d'un medecin */
 router.get("/list", doctor_controller.doctor_list);
 
 /* GET | Demande la liste de tous les medecins */
-router.get("/profile", doctor_controller.doctor_profile);
+router.get("/profile", requiresLogin, doctor_controller.doctor_profile);
 
 /* DELETE | Demande de suppression d'un medecin */
 router.delete("/:id/delete", doctor_controller.doctor_remove_delete);
