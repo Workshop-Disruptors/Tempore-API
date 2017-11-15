@@ -18,6 +18,9 @@ router.post("/register", doctor_controller.doctor_register_post);
 /*  POST | Connection d'un medecin */
 router.post("/login", doctor_controller.doctor_login_post);
 
+/*  POST | Deconneixon d'un medecin */
+router.get("/logout", doctor_controller.doctor_logout);
+
 /* GET | Demande le profile d'un medecin */
 router.get("/list", doctor_controller.doctor_list);
 

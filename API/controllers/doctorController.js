@@ -118,7 +118,7 @@ exports.doctor_update_put = function(req, res){
 };
 
 // Deconnexion via GET
-exports.doctor_deconnexion = function (req, res, next) {
+exports.doctor_logout = function (req, res, next) {
   if (req.session) {
     // delete session object
     req.session.destroy(function (err) {
