@@ -22,7 +22,7 @@ var doctorSchema = mongoose.Schema({
 		required: true,
 		trim: true
 	},
-	ville: {
+	city: {
 		type : String, 
 		max: 100,
 		trim: true
