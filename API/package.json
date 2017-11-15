@@ -1,0 +1,21 @@
+{
+  "name": "www.js",
+  "version": "1.0.0",
+  "description": "Tempore",
+  "main": "app.js",
+  "bin": {
+    "www.js": "www.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "connect-mongo": "^2.0.0",
+    "express": "^4.16.2",
+    "express-session": "^1.15.6",
+    "mongoose": "^4.13.2"
+  }
+}
