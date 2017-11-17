@@ -36,13 +36,11 @@ exports.doctor_register_post = function(req, res, next){
   if (req.body.password !== req.body.passwordConf) {
     var err = new Error('Mots de passe differents.');
     err.status = 400;
-    res.send('Mots de passe differents.');
+    err.message = "Mots de passe differents";
     return next(err);
   }
 
-  if (req.body.mail &&
-    req.body.name &&
-    req.body.password) {
+ // if (req.body.mail && req.body.name && req.body.password) {
 
     var doctordata = {
       mail: req.body.mail,
@@ -59,15 +57,15 @@ exports.doctor_register_post = function(req, res, next){
       } else {
         req.session.userId = user._id;
     //    return res.redirect('/profile');
-    return res.send("Done!");
+    return res.json("Nouveau médecin ajouté !");
       }
     });
 
-	} else {
+/*	}  else {
     var err = new Error('Tous les chanps sont requis.');
     err.status = 400;
     return next(err);
-  }
+  }*/
 };
 
 // Connection d'un médecin via POST

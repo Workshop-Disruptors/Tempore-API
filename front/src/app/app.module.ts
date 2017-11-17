@@ -9,10 +9,13 @@ import { LoginPage } from '../pages/login/login';
 import { NouveauComptePage } from '../pages/nouveau-compte/nouveau-compte';
 import { MesInformationsPage } from '../pages/mes-informations/mes-informations';
 import { NouveauMedecinPage } from '../pages/nouveau-medecin/nouveau-medecin';
+import { HttpClientModule,HttpClient } from '@angular/common/http';
+
 
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { RegisterApiProvider } from '../providers/register-api/register-api';
 
 @NgModule({
   declarations: [
@@ -27,6 +30,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -41,9 +45,11 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     NouveauMedecinPage
   ],
   providers: [
+    HttpClientModule,
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    RegisterApiProvider
   ]
 })
 export class AppModule {}

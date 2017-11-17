@@ -2,6 +2,7 @@
 
 const mongoose = require("mongoose");
 const bcrypt = require('bcrypt');
+var uniqueValidator = require('mongoose-unique-validator');
 
 
 // Definiton de notre schéma de données
@@ -37,6 +38,7 @@ var doctorSchema = mongoose.Schema({
 	}
 });
 
+doctorSchema.plugin(uniqueValidator);
 
 // Authentification et comparaison à la base de données
 doctorSchema.statics.authenticate = function (mail, password, callback) {

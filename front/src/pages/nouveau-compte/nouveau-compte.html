@@ -9,52 +9,52 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding id="page5">
-  <form id="nouveauCompte-form4">
+  <form id="nouveauCompte-form4" >
     <ion-list id="nouveauCompte-list5">
       <ion-item id="nouveauCompte-input9">
         <ion-label>
           Nom
         </ion-label>
-        <ion-input type="text" placeholder=""></ion-input>
+        <ion-input [(ngModel)]="doctorData.name" name="name" type="text" placeholder=""></ion-input>
       </ion-item>
       <ion-item id="nouveauCompte-input10">
         <ion-label>
           Email
         </ion-label>
-        <ion-input type="email" placeholder=""></ion-input>
+        <ion-input [(ngModel)]="doctorData.mail" name="mail" type="email" placeholder=""></ion-input>
       </ion-item>
       <ion-item id="nouveauCompte-input11">
         <ion-label>
           Mot de passe
         </ion-label>
-        <ion-input type="text" placeholder=""></ion-input>
+        <ion-input [(ngModel)]="doctorData.password" name="password" type="password" placeholder=""></ion-input>
       </ion-item>
       <ion-item id="nouveauCompte-input16">
         <ion-label>
           Confirmer le mot de passe
         </ion-label>
-        <ion-input type="text" placeholder=""></ion-input>
+        <ion-input [(ngModel)]="doctorData.passwordConf" name="passwordConf" type="password" placeholder=""></ion-input>
       </ion-item>
     </ion-list>
     <ion-item id="nouveauCompte-input13">
       <ion-label>
         Ville
       </ion-label>
-      <ion-input type="text" placeholder=""></ion-input>
+      <ion-input [(ngModel)]="doctorData.city" name="city" type="text" placeholder=""></ion-input>
     </ion-item>
     <ion-item id="nouveauCompte-input14">
       <ion-label>
         Téléphone
       </ion-label>
-      <ion-input type="tel" placeholder=""></ion-input>
+      <ion-input [(ngModel)]="doctorData.tel" type="tel" name="tel" placeholder=""></ion-input>
     </ion-item>
     <ion-item id="nouveauCompte-input15">
       <ion-label>
         Description
       </ion-label>
-      <ion-input type="text" placeholder=""></ion-input>
+      <ion-input [(ngModel)]="doctorData.description" name="descritpion" type="text" placeholder=""></ion-input>
     </ion-item>
-    <button id="nouveauCompte-button6" ion-button color="stable" block on-click="goToLogin()">
+    <button id="nouveauCompte-button6" ion-button color="stable" block on-click="register()">
       Enregistrer
     </button>
   </form>
