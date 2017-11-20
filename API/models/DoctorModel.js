@@ -42,12 +42,17 @@ doctorSchema.plugin(uniqueValidator);
 
 // Authentification et comparaison à la base de données
 doctorSchema.statics.authenticate = function (mail, password, callback) {
-  User.findOne({ mail: mail })
+
+	var Doctor=this
+
+    Doctor.findOne({ mail: mail })
     .exec(function (err, doctor) {
       if (err) {
+      	console.log("erreur vef")
         return callback(err)
       } else if (!doctor) {
         var err = new Error('Médecin introuvable.');
+        err.message = "Médecin introuvable.";
         err.status = 401;
         return callback(err);
       }
@@ -55,7 +60,10 @@ doctorSchema.statics.authenticate = function (mail, password, callback) {
         if (result === true) {
           return callback(null, doctor);
         } else {
-          return callback();
+        var err = new Error('Mot de passe incorrect.');
+        err.message = "Mot de passe incorrect.";
+        err.status = 401;
+        return callback(err);
         }
       })
     });

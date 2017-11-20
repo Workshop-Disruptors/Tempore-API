@@ -14,7 +14,6 @@ import { AlertController } from 'ionic-angular';
 
 export class NouveauComptePage {
 
-  responseData : any;
   doctorData={
     "name": "",
     "mail": "",
@@ -41,7 +40,6 @@ export class NouveauComptePage {
   
 
   register(){
-
     console.log(this.doctorData)
     this.registerApiProvider.postDoctor(this.doctorData)
     .then((ans)=> {

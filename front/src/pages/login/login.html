@@ -15,17 +15,17 @@
         <ion-label>
           Email
         </ion-label>
-        <ion-input type="email" placeholder=""></ion-input>
+        <ion-input [(ngModel)]="doctorLogin.mail" name="mail" type="email" placeholder=""></ion-input>
       </ion-item>
       <ion-item id="login-input8">
         <ion-label>
           Mot de passe
         </ion-label>
-        <ion-input type="password" placeholder=""></ion-input>
+        <ion-input [(ngModel)]="doctorLogin.password" name="password" type="password" placeholder=""></ion-input>
       </ion-item>
     </ion-list>
     <div class="spacer" style="height:40px;" id="login-spacer3"></div>
-    <button id="login-button4" ion-button color="stable" block on-click="goToMedecin()">
+    <button id="login-button4" ion-button color="stable" block on-click="login()">
       Log in
     </button>
     <button id="login-button5" ion-button clear color="positive" block on-click="goToNouveauCompte()">

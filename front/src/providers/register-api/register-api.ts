@@ -37,5 +37,25 @@ export class RegisterApiProvider {
         reject(err);
       });
       	})
+};
+
+ loginDoctor(doctorLogin){
+  	return new Promise((resolve, reject) => {
+      let headers = new Headers();
+      headers.append("Content-Type","application/json");
+
+      let body = {
+        logmail: doctorLogin.mail,
+        logpassword: doctorLogin.password
+          }
+
+       this.http.post("http://localhost:3000/doctor/login", body, {headers: headers})
+      .subscribe(ans => {
+        resolve(ans);
+       }, err => {
+        reject(err);
+      });
+      	})
 }
+
 }

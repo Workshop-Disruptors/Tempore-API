@@ -71,13 +71,10 @@ exports.doctor_register_post = function(req, res, next){
 // Connection d'un médecin via POST
 exports.doctor_login_post = function(req, res, next){
 
- 	if (req.body.logemail && req.body.logpassword) {
-    User.authenticate(req.body.logemail, req.body.logpassword, function (error, doctor) {
-      if (error || !doctor) {
-        var err = new Error('Email ou mot de passse incorrecte.');
-        err.status = 401;
-        return next(err);
-      } else {
+ 	if (req.body.logmail && req.body.logpassword) {
+    Doctor.authenticate(req.body.logmail, req.body.logpassword, function (error, doctor) {
+      console.log(error, doctor)
+        if (doctor) {
         req.session.userId = doctor._id;
         return res.redirect('/profile');
       }
@@ -93,7 +90,7 @@ exports.doctor_login_post = function(req, res, next){
 // GET route after registering
 exports.doctor_profile = function(req, res, next){
   Doctor.findById(req.session.userId)
-    .exec(function (doctor, user) {
+    .exec(function (error, doctor) {
       if (error) {
         return next(error);
       } else {
