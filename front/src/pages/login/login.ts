@@ -7,8 +7,10 @@ import { AlertController } from 'ionic-angular';
 
 @Component({
   selector: 'page-login',
-  templateUrl: 'login.html'
+  templateUrl: 'login.html',
+  providers: [RegisterApiProvider]
 })
+
 export class LoginPage {
 
   doctorLogin={
@@ -16,8 +18,9 @@ export class LoginPage {
     "password": "",
   };
 
-  constructor(public navCtrl: NavController, public registerApiProvider:RegisterApiProvider, public alertCtrl: AlertController) {
+    constructor(public navCtrl: NavController, public registerApiProvider:RegisterApiProvider, public alertCtrl: AlertController) {
   }
+
   goToMedecin(params){
     if (!params) params = {};
     this.navCtrl.push(MedecinPage);
@@ -35,9 +38,14 @@ export class LoginPage {
         let alert = this.alertCtrl.create({
         title: "Réussi",
         subTitle: ans,
-        buttons: ['OK']
+        buttons:  [{
+          text: 'OK',
+          handler: () => {
+          this.goToMedecin();   
+          }
+        }]
        });
-        alert.present();   
+        alert.present();
      },
       (err) =>  {
         console.log(err);

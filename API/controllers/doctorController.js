@@ -48,15 +48,15 @@ exports.doctor_register_post = function(req, res, next){
       password: req.body.password,
       city: req.body.city,
       tel: req.body.tel,
-      description: req.body.description
+      description: req.body.description,
+      delay: "0"
     }
 
-    Doctor.create(doctordata, function (error, user) {
+    Doctor.create(doctordata, function (error, doctor) {
       if (error) {
         return next(error);
       } else {
-        req.session.userId = user._id;
-    //    return res.redirect('/profile');
+        req.session.userId = doctor._id;
     return res.json("Nouveau médecin ajouté !");
       }
     });
@@ -76,7 +76,10 @@ exports.doctor_login_post = function(req, res, next){
       console.log(error, doctor)
         if (doctor) {
         req.session.userId = doctor._id;
-        return res.redirect('/profile');
+        console.log("login", req.session);
+        return res.json("Connecté !");
+      } else {
+      return next(error);
       }
     });
   } else {
@@ -99,7 +102,7 @@ exports.doctor_profile = function(req, res, next){
           err.status = 400;
           return next(err);
         } else {
-          return res.send('<h1>Name: </h1>' + doctor.name + '<h2>Mail: </h2>' + doctor.mail + '<br><a type="button" href="/logout">Logout</a>')
+          return res.json(doctor)
         }
       }
     });

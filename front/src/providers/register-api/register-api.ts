@@ -11,7 +11,6 @@ import { Injectable } from '@angular/core';
 export class RegisterApiProvider {
 
   constructor(public http: HttpClient) {
-    console.log('Hello RegisterApiProvider Provider');
   }
 
 
@@ -30,7 +29,7 @@ export class RegisterApiProvider {
         descritpion: doctorData.descritpion
       }
 
-       this.http.post("http://localhost:3000/doctor/register", body, {headers: headers})
+       this.http.post("http://localhost:3000/doctor/register", body, {headers: headers, withCredentials: true})
       .subscribe(ans => {
         resolve(ans);
        }, err => {
@@ -49,7 +48,21 @@ export class RegisterApiProvider {
         logpassword: doctorLogin.password
           }
 
-       this.http.post("http://localhost:3000/doctor/login", body, {headers: headers})
+       this.http.post("http://localhost:3000/doctor/login", body, {headers: headers, withCredentials: true})
+      .subscribe(ans => {
+        resolve(ans);
+       }, err => {
+        reject(err);
+      });
+      	})
+};
+
+ infoDoctor(doctorLogin){
+  	return new Promise((resolve, reject) => {
+      let headers = new Headers();
+      headers.append("Content-Type","application/json");
+
+       this.http.get("http://localhost:3000/doctor/profile", {headers: headers, withCredentials: true})
       .subscribe(ans => {
         resolve(ans);
        }, err => {

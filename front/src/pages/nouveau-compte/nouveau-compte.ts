@@ -28,11 +28,7 @@ export class NouveauComptePage {
 
   }
 
-  goToLogin(params){
-    if (!params) params = {};
-    this.navCtrl.push(LoginPage);
-
-  }goToMedecin(params){
+  goToMedecin(params){
     if (!params) params = {};
     this.navCtrl.push(MedecinPage);
   }
@@ -49,7 +45,8 @@ export class NouveauComptePage {
         subTitle: ans,
         buttons: ['OK']
        });
-        alert.present();   
+        alert.present();
+        this.goToMedecin();  
      },
       (err) =>  {
         console.log(err);

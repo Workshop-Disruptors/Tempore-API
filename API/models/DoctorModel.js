@@ -34,7 +34,12 @@ var doctorSchema = mongoose.Schema({
 		max: 10
 	},
 	description: {
-		type : String
+		type : String,
+		trim: true
+	},
+	delay: {
+		type : Number,
+		trim : true
 	}
 });
 
@@ -48,7 +53,6 @@ doctorSchema.statics.authenticate = function (mail, password, callback) {
     Doctor.findOne({ mail: mail })
     .exec(function (err, doctor) {
       if (err) {
-      	console.log("erreur vef")
         return callback(err)
       } else if (!doctor) {
         var err = new Error('Médecin introuvable.');

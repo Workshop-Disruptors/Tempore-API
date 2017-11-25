@@ -9,11 +9,11 @@ var doctor_controller = require("../controllers/doctorController");
 
 // Authentificaiton
 function requiresLogin(req, res, next) {
+	console.log(req.session);
   if (req.session && req.session.userId) {
-  	console.log("next", next);
+  	console.log("ok", next);
     return next();
   } else {
-  	  	console.log("next", next);
 
     var err = new Error('Vous devez etre connecté pour acceder à cette page.');
     err.status = 401;

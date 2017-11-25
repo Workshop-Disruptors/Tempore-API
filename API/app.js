@@ -46,18 +46,16 @@ db.once('open', function () {
 
 //use sessions for tracking logins
 app.use(session({
-  secret: 'doctor',
+  cookieName: 'doctor',
+  secret: 'something',
   resave: true,
-  saveUninitialized: false,
-    store: new MongoStore({
-    mongooseConnection: db
-  })
+  saveUninitialized: false
 }));
 
 // Add headers
 app.use(function (req, res, next) {
     // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8100');
 
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
