@@ -91,7 +91,7 @@ exports.doctor_login_post = function(req, res, next){
 
 
 // GET route after registering
-exports.doctor_profile = function(req, res, next){
+exports.doctor_profile_get = function(req, res, next){
   Doctor.findById(req.session.userId)
     .exec(function (error, doctor) {
       if (error) {
@@ -108,6 +108,21 @@ exports.doctor_profile = function(req, res, next){
     });
 };
 
+
+// POST route after registering
+exports.doctor_profile_post = function(req, res, next){
+  Doctor.findByIdAndUpdate(req.session.userId, { delay: req.body.delay }, function (err, doctor) {
+      if (err) {
+        return next(err);
+      } else if (doctor === null) {
+          var err = new Error('Non autorisé ! Revenez en arrière !');
+          err.status = 400;
+          return next(err);
+        } else {
+          return res.json("done")
+        }
+});
+};
 
 // Supprime un medecin via DELETE
 exports.doctor_remove_delete = function(req, res){

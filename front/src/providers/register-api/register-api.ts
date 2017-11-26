@@ -57,12 +57,30 @@ export class RegisterApiProvider {
       	})
 };
 
- infoDoctor(doctorLogin){
+ infoDoctor(){
   	return new Promise((resolve, reject) => {
       let headers = new Headers();
       headers.append("Content-Type","application/json");
 
        this.http.get("http://localhost:3000/doctor/profile", {headers: headers, withCredentials: true})
+      .subscribe(ans => {
+        resolve(ans);
+       }, err => {
+        reject(err);
+      });
+      	})
+}
+
+ delay(newdelay){
+  	return new Promise((resolve, reject) => {
+      let headers = new Headers();
+      headers.append("Content-Type","application/json");
+          
+      let body = {
+      	delay: newdelay
+      }
+
+       this.http.post("http://localhost:3000/doctor/profile", body, {headers: headers, withCredentials: true})
       .subscribe(ans => {
         resolve(ans);
        }, err => {

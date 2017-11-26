@@ -9,13 +9,10 @@ var doctor_controller = require("../controllers/doctorController");
 
 // Authentificaiton
 function requiresLogin(req, res, next) {
-	console.log(req.session);
   if (req.session && req.session.userId) {
-  	console.log("ok", next);
     return next();
   } else {
-
-    var err = new Error('Vous devez etre connecté pour acceder à cette page.');
+    var err = new Error('Vous devez être connecté pour acceder à cette page, retounez en arrière');
     err.status = 401;
     return next(err);
   }
@@ -38,8 +35,11 @@ router.get("/logout", requiresLogin, doctor_controller.doctor_logout);
 /* GET | Demande le profile d'un medecin */
 router.get("/list", doctor_controller.doctor_list);
 
-/* GET | Demande la liste de tous les medecins */
-router.get("/profile", requiresLogin, doctor_controller.doctor_profile);
+/* GET | Demande les infos d'un medecins */
+router.get("/profile", requiresLogin, doctor_controller.doctor_profile_get);
+
+/* POST | Ajoute un nouveau retard a un medecin */
+router.post("/profile", requiresLogin, doctor_controller.doctor_profile_post);
 
 /* DELETE | Demande de suppression d'un medecin */
 router.delete("/:id/delete", doctor_controller.doctor_remove_delete);
