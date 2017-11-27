@@ -14,10 +14,12 @@ import { AlertController } from 'ionic-angular';
 })
 export class RendezVousPage {
 
-  public doctor: any
+  public doctors: any
+  searchQuery: string = '';
+
 
   constructor(public navCtrl: NavController, public DisplayProvider: DisplayProvider, public alertCtrl: AlertController) {
-      this.loadDoctor()
+     this.loadDoctors()
   }
   goToNouveauMedecin(params){
     if (!params) params = {};
@@ -30,20 +32,41 @@ export class RendezVousPage {
     this.navCtrl.push(MedecinPage);
   }
 
-  loadDoctor(){
-    this.DisplayProvider.listDoctor()
+  loadDoctors(){
+   return new Promise((resolve, reject) => {
+    this.DisplayProvider.listDoctors()
       .then((ans)=> {
-        console.log(ans)
-        this.doctor=ans
+        resolve(this.doctors=ans)
       },
       (err)=>{
-         console.log(err);
+        console.log(err);
         let alert = this.alertCtrl.create({
         title: "Erreur",
         subTitle: err.error,
         buttons: ['OK']
        });
-        alert.present();
+        reject(alert.present());
       })
+    })
   }
-}
+
+
+  getItems(ev: any) {
+    // Reset items back to all of the items
+    this.loadDoctors()
+      .then((ans)=>{
+    // set val to the value of the searchbar
+    let val = ev.target.value;
+
+    // if the value is an empty string don't filter the items
+    if (val && val.trim() != '') {
+      this.doctors = this.doctors.filter((doctor) => {
+        return (doctor.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      })
+    console.log(this.doctors)
+    }
+    })
+  }
+
+  }
+

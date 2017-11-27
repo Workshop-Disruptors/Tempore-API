@@ -33,17 +33,8 @@ export class MedecinPage {
     this.navCtrl.push(LoginPage);
   }
 
-  loadInfo(){
-    this.registerApiProvider.infoDoctor()
-    .then((ans)=> {
-	   this.delay = ans.delay;
-	   this.name = ans.name;
-     },
-      (err) =>  {
-        console.log(err);
-
-	if (err="not connected"){
-		let alert = this.alertCtrl.create({
+  errNotConnected(){
+  	let alert = this.alertCtrl.create({
         title: "Non connecté",
         subTitle: "Vous devez être connecté pour accéder à cette page.",
         buttons: [{
@@ -58,7 +49,18 @@ export class MedecinPage {
           }
         }]
        });
-        alert.present();   
+        alert.present();
+  }
+
+  loadInfo(){
+    this.registerApiProvider.infoDoctor()
+    .then((ans)=> {
+	   this.delay = ans.delay;
+	   this.name = ans.name;
+     },
+      (err) =>  {
+	  if (err="not connected"){
+		   this.errNotConnected()
         } else {
 
         let alert = this.alertCtrl.create({
@@ -77,13 +79,17 @@ export class MedecinPage {
 	   this.loadInfo()
      },
       (err) =>  {
+       if (err="not connected"){
+	   this.errNotConnected()
+        } else {
         console.log(err);
         let alert = this.alertCtrl.create({
         title: "Erreur",
         subTitle: err.error,
         buttons: ['OK']
        });
-        alert.present();   
+        alert.present();
+        }   
          })
   }
 
@@ -107,13 +113,17 @@ export class MedecinPage {
         this.goToTempore();   
      },
       (err) =>  {
+       if (err="not connected"){
+	   this.errNotConnected()
+        } else {
         console.log(err);
         let alert = this.alertCtrl.create({
         title: "Erreur",
         subTitle: err.error,
         buttons: ['OK']
        });
-        alert.present();   
+        alert.present();
+        }   
          })
   }
 

@@ -8,13 +8,23 @@
     </ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content padding id="page1" style="background-color:#DFFFE9;">
-  <h1 id="tempore-heading1" style="color:#000000;">
+<ion-content padding id="page1" style="background-color:#76D6FF;">
+  <h1 id="tempore-heading1" style="text-align:center;">
     Bienvenue sur Tempore
   </h1>
-  <div id="tempore-markdown1" class="show-list-numbers-and-dots">
+  <div id="tempore-markdown1" style="text-align:center;">
     <p style="color:#000000;">
       Le retard est votre allié !
     </p>
+  </div>
+    <div class="spacer" style="height:100px;" id="medecin-spacer5"></div>
+  <div id="tempore-markdown1" style="text-align:center;">
+  <button ion-button color="light" style="text-align:center;" round on-click="goToRendezVous()"> Votre médecin est-il à l'heure ?</button>
+  <div class="spacer" style="height:80px;" id="medecin-spacer5"></div>
+  <p>
+  Et si vous êtes un praticien :
+  </p>
+  <div class="spacer" style="height:20px;" id="medecin-spacer5"></div>
+  <button ion-button color="light" style="text-align:center;" round on-click="goToMedecin()"> Informez vos patients de l'avancée de vos consultations </button>
   </div>
 </ion-content>

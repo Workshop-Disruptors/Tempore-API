@@ -13,7 +13,7 @@ export class DisplayProvider {
   constructor(public http: HttpClient) {
   }
 
- listDoctor(){
+ listDoctors(){
   	return new Promise((resolve, reject) => {
       let headers = new Headers();
       headers.append("Content-Type","application/json");

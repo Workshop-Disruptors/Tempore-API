@@ -26,7 +26,7 @@ export class RegisterApiProvider {
         passwordConf: doctorData.passwordConf,
         city: doctorData.city,
         tel: doctorData.tel,
-        descritpion: doctorData.descritpion
+        description: doctorData.description
       }
 
        this.http.post("http://localhost:3000/doctor/register", body, {headers: headers, withCredentials: true})

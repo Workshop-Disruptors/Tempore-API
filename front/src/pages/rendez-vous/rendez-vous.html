@@ -9,15 +9,12 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding id="page2">
-<ion-searchbar ></ion-searchbar>
+<ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
   <ion-list>
-    <button ion-item *ngFor="let person of doctor" (click)="loadDoctor()">
-      <h2>{{person.name}}</h2>
-      <p>{{person.delay}} min de retard </p>
-<!--       <button ion-button outline item-end icon-left>
-      <ion-icon name="contact"></ion-icon>
-      Info
-    </button>   --> 
-     </button>
+    <ion-item *ngFor="let doctor of doctors" >
+      <h2>{{doctor.name}} - {{doctor.city}}</h2>
+      <h3>{{doctor.description}} - {{doctor.tel}}</h3>
+      <p>{{doctor.delay}} min de retard </p>
+     </ion-item>
   </ion-list>
 </ion-content>
