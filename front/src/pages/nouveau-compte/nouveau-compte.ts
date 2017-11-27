@@ -31,6 +31,7 @@ export class NouveauComptePage {
   goToMedecin(params){
     if (!params) params = {};
     this.navCtrl.push(MedecinPage);
+    this.navCtrl.setRoot(MedecinPage);
   }
 
   

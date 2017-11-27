@@ -75,12 +75,26 @@ export class RegisterApiProvider {
   	return new Promise((resolve, reject) => {
       let headers = new Headers();
       headers.append("Content-Type","application/json");
-          
+
       let body = {
       	delay: newdelay
       }
 
        this.http.post("http://localhost:3000/doctor/profile", body, {headers: headers, withCredentials: true})
+      .subscribe(ans => {
+        resolve(ans);
+       }, err => {
+        reject(err);
+      });
+      	})
+}
+
+ logout(){
+  	return new Promise((resolve, reject) => {
+      let headers = new Headers();
+      headers.append("Content-Type","application/json");
+
+       this.http.get("http://localhost:3000/doctor/logout", {headers: headers, withCredentials: true})
       .subscribe(ans => {
         resolve(ans);
        }, err => {

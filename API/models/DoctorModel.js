@@ -31,7 +31,7 @@ var doctorSchema = mongoose.Schema({
 	tel: {
 		type : Number,
 		trim: true, 
-		max: 10
+		max: 9999999999
 	},
 	description: {
 		type : String,

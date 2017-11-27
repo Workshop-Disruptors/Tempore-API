@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { TemporePage } from '../tempore/tempore';
+import { LoginPage } from '../login/login';
 import { NavController } from 'ionic-angular';
 import { RegisterApiProvider } from '../../providers/register-api/register-api';
 import { AlertController } from 'ionic-angular';
@@ -20,28 +22,56 @@ export class MedecinPage {
   	 this.loadInfo();
   }
   
+  goToTempore(params){
+    if (!params) params = {};
+    this.navCtrl.push(TemporePage);
+    this.navCtrl.setRoot(TemporePage);
+   }
+
+   goToLogin(params){
+    if (!params) params = {};
+    this.navCtrl.push(LoginPage);
+  }
 
   loadInfo(){
     this.registerApiProvider.infoDoctor()
     .then((ans)=> {
-    	console.log(ans.delay)
 	   this.delay = ans.delay;
 	   this.name = ans.name;
      },
       (err) =>  {
         console.log(err);
+
+	if (err="not connected"){
+		let alert = this.alertCtrl.create({
+        title: "Non connecté",
+        subTitle: "Vous devez être connecté pour accéder à cette page.",
+        buttons: [{
+          text: 'Connexion',
+          handler: () => {
+          this.goToLogin();   
+          }
+        },{
+        text: 'Annuler',
+        handler: () => {
+        this.goToTempore();   
+          }
+        }]
+       });
+        alert.present();   
+        } else {
+
         let alert = this.alertCtrl.create({
         title: "Erreur",
         subTitle: err.error,
         buttons: ['OK']
        });
         alert.present();   
+        }
          })
   }
 
    modifyDelay(newdelay){
-   console.log("modifyDelay", newdelay)
-
    this.registerApiProvider.delay(newdelay)
     .then((ans)=> {
 	   this.loadInfo()
@@ -70,4 +100,21 @@ export class MedecinPage {
   raz(){
   	this.modifyDelay(0)
 }
+
+  logout(){
+	this.registerApiProvider.logout()
+    .then((ans)=> {
+        this.goToTempore();   
+     },
+      (err) =>  {
+        console.log(err);
+        let alert = this.alertCtrl.create({
+        title: "Erreur",
+        subTitle: err.error,
+        buttons: ['OK']
+       });
+        alert.present();   
+         })
+  }
+
 }

@@ -24,6 +24,7 @@ export class LoginPage {
   goToMedecin(params){
     if (!params) params = {};
     this.navCtrl.push(MedecinPage);
+    this.navCtrl.setRoot(MedecinPage);
   }
   goToNouveauCompte(params){
     if (!params) params = {};

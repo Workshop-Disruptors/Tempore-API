@@ -119,7 +119,7 @@ exports.doctor_profile_post = function(req, res, next){
           err.status = 400;
           return next(err);
         } else {
-          return res.json("done")
+          return res.json("done");
         }
 });
 };
@@ -142,7 +142,7 @@ exports.doctor_logout = function (req, res, next) {
       if (err) {
         return next(err);
       } else {
-        return res.redirect('/');
+        return res.json("Déconnecté");
       }
     });
   }

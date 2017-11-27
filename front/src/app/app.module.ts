@@ -16,6 +16,7 @@ import { HttpClientModule,HttpClient } from '@angular/common/http';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { RegisterApiProvider } from '../providers/register-api/register-api';
+import { DisplayProvider } from '../providers/display/display';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { RegisterApiProvider } from '../providers/register-api/register-api';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    RegisterApiProvider
+    RegisterApiProvider,
+    DisplayProvider
   ]
 })
 export class AppModule {}

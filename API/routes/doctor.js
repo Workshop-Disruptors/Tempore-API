@@ -12,7 +12,7 @@ function requiresLogin(req, res, next) {
   if (req.session && req.session.userId) {
     return next();
   } else {
-    var err = new Error('Vous devez être connecté pour acceder à cette page, retounez en arrière');
+    var err = new Error('not connected');
     err.status = 401;
     return next(err);
   }

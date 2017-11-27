@@ -4,28 +4,20 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>
-      Rendez-vous
+      À l'heure ?
     </ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content padding id="page2">
-  <button id="rendezVous-button3" ion-button color="positive" block on-click="goToNouveauMedecin()">
-    Ajouter un medecin
-  </button>
-  <ion-list id="rendezVous-list3">
-    <ion-item id="rendezVous-list-item-container2">
-      <div id="rendezVous-markdown5" class="show-list-numbers-and-dots">
-        <p style="margin-top:0px;color:#000000;">
-          Rendez-vous 1 : retard 10 min
-        </p>
-      </div>
-    </ion-item>
-    <ion-item id="rendezVous-list-item-container5">
-      <div id="rendezVous-markdown9" class="show-list-numbers-and-dots">
-        <p style="margin-top:0px;color:#000000;">
-          Rendez-vous 1 : retard 10 min
-        </p>
-      </div>
-    </ion-item>
+<ion-searchbar ></ion-searchbar>
+  <ion-list>
+    <button ion-item *ngFor="let person of doctor" (click)="loadDoctor()">
+      <h2>{{person.name}}</h2>
+      <p>{{person.delay}} min de retard </p>
+<!--       <button ion-button outline item-end icon-left>
+      <ion-icon name="contact"></ion-icon>
+      Info
+    </button>   --> 
+     </button>
   </ion-list>
 </ion-content>
