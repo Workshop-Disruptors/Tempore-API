@@ -9,7 +9,7 @@ var doctor_controller = require("../controllers/doctorController");
 
 // Authentificaiton
 function requiresLogin(req, res, next) {
-  console.log(req)
+  console.log("requiresLogin",req)
   if (req.session && req.session.userId) {
     return next();
   } else {
