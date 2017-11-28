@@ -2,7 +2,6 @@
 
 // Parametres du serveur
 var hostname = "localhost";
-var port = 3000;
 
 // Récuperation de l'application
 var app = require("../app");
