@@ -53,7 +53,7 @@ app.use(session({
 // Add headers
 app.use(function (req, res, next) {
     // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'https://tempore.herokuapp.com');
+    res.setHeader('Access-Control-Allow-Origin', 'http://tempore.herokuapp.com');
 
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
