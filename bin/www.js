@@ -8,6 +8,10 @@ var port = 3000;
 var app = require("../app");
 
 // Demarage du serveur
-app.listen(port, hostname, function(){
-	console.log("Mon serveur fonctionne sur http://"+hostname+":"+port+"\n");
+
+var server = app.listen(process.env.PORT || 8080, function () {
+var port = server.address().port;
+console.log("App now running on port", port);
+/* app.listen(port, hostname, function(){
+	console.log("Mon serveur fonctionne sur http://"+hostname+":"+port+"\n");*/
 });
