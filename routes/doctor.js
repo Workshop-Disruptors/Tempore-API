@@ -9,8 +9,8 @@ var doctor_controller = require("../controllers/doctorController");
 
 // Authentificaiton
 function requiresLogin(req, res, next) {
-  console.log("requiresLogin",req.sessionStore.sessions.[1].userId)
-  if (req.sessions && req.sessions.userId) {
+  console.log("requiresLogin",req.session)
+  if (req.session && req.session.userId) {
     return next();
   } else {
     var err = new Error('not connected');
