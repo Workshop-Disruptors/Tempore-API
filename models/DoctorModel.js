@@ -84,6 +84,17 @@ doctorSchema.pre('save', function (next) {
   })
 });
 
+doctorSchema.pre('update', function (next) {
+  var doctor = this;
+  bcrypt.hash(doctor.password, 10, function (err, hash) {
+    if (err) {
+      return next(err);
+    }
+    doctor.password = hash;
+    next();
+  })
+});
+
 
 // Export du modèle
 module.exports = mongoose.model("Doctor",doctorSchema);

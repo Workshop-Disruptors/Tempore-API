@@ -84,11 +84,10 @@ exports.doctor_update = function(req, res, next){
       delay: "0"
     }
 
-    Doctor.update(doctordata, function (error, doctor) {
+    Doctor.update({ _id: req.session.userId }, doctordata, function (error, doctor) {
       if (error) {
         return next(error);
       } else {
-        req.session.userId = doctor._id;
     return res.json("Médecin mis à jour !");
       }
     });
