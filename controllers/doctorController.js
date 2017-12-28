@@ -85,7 +85,7 @@ exports.doctor_update = function(req, res, next){
       delay: "0"
     }
 
-    Doctor.save(doctordata, function (error, doctor) {
+    Doctor.update(doctordata, function (error, doctor) {
       if (error) {
         return next(error);
       } else {
