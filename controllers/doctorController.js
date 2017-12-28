@@ -84,7 +84,7 @@ exports.doctor_update = function(req, res, next){
       delay: "0"
     }
 
-    Doctor.update({ _id: req.session.userId }, doctordata, function (error, doctor) {
+    Doctor.save({ _id: req.session.userId }, doctordata, function (error, doctor) {
       if (error) {
         return next(error);
       } else {
