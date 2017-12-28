@@ -76,7 +76,6 @@ exports.doctor_update = function(req, res, next){
  // if (req.body.mail && req.body.name && req.body.password) {
 
     var doctordata = {
-      mail: req.body.mail,
       name: req.body.name,
       password: req.body.password,
       city: req.body.city,
