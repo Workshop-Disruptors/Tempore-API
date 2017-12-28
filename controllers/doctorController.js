@@ -80,9 +80,8 @@ exports.doctor_update = function(req, res, next){
       password: req.body.password,
       city: req.body.city,
       tel: req.body.tel,
-      description: req.body.description,
-      delay: "0"
-    }
+      description: req.body.description
+      }
 
     Doctor.update({ _id: req.session.userId }, doctordata, function (error, doctor) {
       if (error) {
