@@ -5,6 +5,8 @@ const express = require("express");
 const mongoose = require("mongoose")
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
+
 
 // Récuperation des routes
 var index = require("./routes/index");
@@ -70,7 +72,10 @@ app.use(session({
   proxy: true,
   resave: true,
   saveUninitialized: false,
-  cookie:{ httpOnly: true, secure: true }
+  cookie:{ httpOnly: true, secure: true },
+   store: new MongoStore({
+    mongooseConnection: db
+  })
 }));
 
 
