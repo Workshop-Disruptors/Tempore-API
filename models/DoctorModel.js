@@ -85,7 +85,7 @@ doctorSchema.pre('save', function (next) {
 });
 
 doctorSchema.pre('update', function (next) {
-	console.log("update")
+	console.log("update",doctor.password)
   var doctor = this;
   bcrypt.hash(doctor.password, 10, function (err, hash) {
     if (err) {
