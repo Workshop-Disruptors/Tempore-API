@@ -42,11 +42,11 @@ router.get("/profile", requiresLogin, doctor_controller.doctor_profile_get);
 /* POST | Ajoute un nouveau retard a un medecin */
 router.post("/profile", requiresLogin, doctor_controller.doctor_profile_post);
 
+/* POST | Demande de mis à jour d'un medecin */
+router.post("/update", doctor_controller.doctor_update);
+
 /* DELETE | Demande de suppression d'un medecin */
 router.delete("/:id/delete", doctor_controller.doctor_remove_delete);
-
-/* PUT | Demande de mis à jour d'un medecin */
-router.put("/:id/update", doctor_controller.doctor_update_put);
 
 /* GET | Demande d'information pour un medecin */
 router.get("/:id", doctor_controller.doctor_details);

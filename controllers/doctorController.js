@@ -60,12 +60,39 @@ exports.doctor_register_post = function(req, res, next){
     return res.json("Nouveau médecin ajouté !");
       }
     });
+};
 
-/*	}  else {
-    var err = new Error('Tous les chanps sont requis.');
+// Mis à jour d'un médecin
+exports.doctor_update = function(req, res, next){
+  // Crée un nouveau medecin selon le model
+
+  if (req.body.password !== req.body.passwordConf) {
+    var err = new Error('Mots de passe differents.');
     err.status = 400;
+    err.message = "Mots de passe differents";
     return next(err);
-  }*/
+  }
+
+ // if (req.body.mail && req.body.name && req.body.password) {
+
+    var doctordata = {
+      mail: req.body.mail,
+      name: req.body.name,
+      password: req.body.password,
+      city: req.body.city,
+      tel: req.body.tel,
+      description: req.body.description,
+      delay: "0"
+    }
+
+    Doctor.save(doctordata, function (error, doctor) {
+      if (error) {
+        return next(error);
+      } else {
+        req.session.userId = doctor._id;
+    return res.json("Médecin mis à jour !");
+      }
+    });
 };
 
 // Connection d'un médecin via POST
@@ -126,11 +153,6 @@ exports.doctor_profile_post = function(req, res, next){
 
 // Supprime un medecin via DELETE
 exports.doctor_remove_delete = function(req, res){
-		res.send("Non implementé pour")
-};
-
-// Mise à jour d'un medecin via PUT
-exports.doctor_update_put = function(req, res){
 		res.send("Non implementé pour")
 };
 
