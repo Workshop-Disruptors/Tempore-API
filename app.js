@@ -69,7 +69,8 @@ app.use(session({
   secret: 'something',
   proxy: true,
   resave: true,
-  saveUninitialized: false
+  saveUninitialized: false,
+  cookie:{ httpOnly: true, secure: true }
 }));
 
 
